@@ -501,11 +501,8 @@ func! PhpDocDefault()
     " Local indent
     let l:txtBOL = g:pdv_cfg_BOL . indent
 
-    exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
-
     " Close the comment block.
-    exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_CommentSingle . g:pdv_cfg_EOL
 endfunc
 
 " }}}
