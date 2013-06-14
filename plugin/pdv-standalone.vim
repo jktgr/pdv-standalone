@@ -180,7 +180,7 @@ let g:pdv_cfg_EOL = ""
  " Document a single line of code ( does not check if doc block already exists )
 
 func! PhpDocSingle()
-    let l:endline = line(".") + 1
+    let l:endline = line(".")
     call PhpDoc()
     exe "norm! " . l:endline . "G$"
 endfunc
