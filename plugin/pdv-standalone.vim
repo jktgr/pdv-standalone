@@ -131,9 +131,9 @@ endif
 if !exists('g:pdv_cfg_CommentTail')
   let g:pdv_cfg_CommentTail = " */"
 endif
-" Single line comment prefix. Defaults to "//"
+" Single line comment prefix. Defaults to "// "
 if !exists('g:pdv_cfg_CommentSingle')
-  let g:pdv_cfg_CommentSingle = "//"
+  let g:pdv_cfg_CommentSingle = "// "
 endif
 
 "
@@ -343,8 +343,8 @@ func! PhpDocVar()
     let l:indent = matchstr(l:name, g:pdv_re_indent)
 
     let l:modifier = substitute (l:name, g:pdv_re_attribute, '\1', "g")
-    let l:varname = substitute (l:name, g:pdv_re_attribute, '\3', "g")
-    let l:default = substitute (l:name, g:pdv_re_attribute, '\4', "g")
+    let l:varname  = substitute (l:name, g:pdv_re_attribute, '\3', "g")
+    let l:default  = substitute (l:name, g:pdv_re_attribute, '\4', "g")
     let l:scope = PhpDocScope(l:modifier, l:varname)
 
     let l:static = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_static) : ""
@@ -353,20 +353,7 @@ func! PhpDocVar()
 
     let l:comment_lines = []
 
-    call add(l:comment_lines, l:indent . g:pdv_cfg_CommentHead)
-    call add(l:comment_lines, l:indent . g:pdv_cfg_Comment1 . l:varname)
-    call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn)
-    if l:static != ""
-        call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @static")
-    endif
-    call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @var " . l:type)
-    if l:scope != ""
-        call add(l:comment_lines, l:indent . g:pdv_cfg_Commentn . " @access " . l:scope)
-    endif
-
-    " Close the comment block.
-    call add(l:comment_lines, l:indent . g:pdv_cfg_CommentTail)
-
+    call add(l:comment_lines, l:indent . g:pdv_cfg_CommentHead . " @" . l:modifier . " " . l:default . " " . l:varname . " " . g:pdv_cfg_CommentTail)
     call append(l:commentline, l:comment_lines)
     return l:modifier ." ". l:varname
 endfunc
